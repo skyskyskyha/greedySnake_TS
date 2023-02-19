@@ -1,7 +1,6 @@
 import "./index.less"
 import Food from "./modules/Food";
+import GameControl from "./modules/GameControl";
 
-const food = new Food();
-
-
-
+let gc = new GameControl();
+gc.init();
