@@ -20,13 +20,11 @@ class GameControl{
     }
 
     keydownHandler(event: KeyboardEvent){
-        console.log(event.key);
         this.direction = event.key;
-        this.run();
+        //this.run();
     }
 
     run(){
-        console.log("running")
         let X = this.snake.X;
         let Y = this.snake.Y;
         switch (this.direction){
@@ -47,9 +45,24 @@ class GameControl{
                 X+=10;
                 break;
         }
-        this.snake.X = X;
-        this.snake.Y = Y;
+        if (this.checkEat(X,Y)){
+            this.food.change();
+            this.scorePanel.addScore();
+            this.snake.addBody();
+        }
+        try {
+            this.snake.X = X;
+            this.snake.Y = Y;
+        }
+        catch (e) {
+            alert(e.message);
+            this.isLive = false;
+        }
         this.isLive&&setTimeout(this.run.bind(this), 300 - (this.scorePanel.level)*20);
+    }
+
+    checkEat(X: number, Y: number){
+        return this.food.X === X && this.food.Y === Y;
     }
 }
 
